@@ -16,11 +16,12 @@ const menuRoutes = require('./Routes/menuItemRoutes');
 const reviewsRoutes = require('./Routes/reviewsRoutes');
 const ordersRoutes = require('./Routes/ordersRoutes');
 const reportsRoutes = require('./Routes/reportsRoutes');
-
+const cartRoutes = require('./Routes/cartRoutes');
 
 app.use('/api', userRoutes);
 app.use('/api/categories', categoriesRoutes);
 app.use('/api/menu', menuRoutes);
+app.use('/api/cart', cartRoutes);
 app.use('/api/reviews', reviewsRoutes);
 app.use('/api/orders', ordersRoutes);
 app.use('/api/reports', reportsRoutes);
