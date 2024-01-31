@@ -15,9 +15,6 @@ const categoriesRoutes = require('./Routes/categoriesRoutes');
 const menuRoutes = require('./Routes/menuItemRoutes');
 const reviewsRoutes = require('./Routes/reviewsRoutes');
 const ordersRoutes = require('./Routes/ordersRoutes');
-const reservationsRoutes = require('./Routes/reservationsRoutes');
-const staffRoutes = require('./Routes/staffRoutes');
-const tablesRoutes = require('./Routes/tablesRoutes');
 const reportsRoutes = require('./Routes/reportsRoutes');
 
 
@@ -26,10 +23,7 @@ app.use('/api/categories', categoriesRoutes);
 app.use('/api/menu', menuRoutes);
 app.use('/api/reviews', reviewsRoutes);
 app.use('/api/orders', ordersRoutes);
-app.use('/api/tables', tablesRoutes);
-app.use('/api/tables/reservations', reservationsRoutes);
 app.use('/api/reports', reportsRoutes);
-app.use('/api/staff', staffRoutes);
 
 app.use(errorHandler);
 

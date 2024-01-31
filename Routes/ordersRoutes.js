@@ -9,11 +9,13 @@ const {
     updateSingleOrder,
     deleteSingleOrder } = require('../Controllers/orderControllers');
 
-router.route('/').get( getAllOrders );
-router.route('/user').get( getAllMyOrders );
-router.route('/').post( addSingleOrder );
-router.route('/:id').get( getSingleOrder );
-router.route('/:id').put( updateSingleOrder );
-router.route('/:id').delete( deleteSingleOrder );
+const validatetoken = require('../Middlewares/validatetoken');
+
+router.route('/').get(validatetoken, getAllOrders );
+router.route('/user').get(validatetoken, getAllMyOrders );
+router.route('/').post(validatetoken, addSingleOrder );
+router.route('/:id').get(validatetoken, getSingleOrder );
+router.route('/:id').put(validatetoken, updateSingleOrder );
+router.route('/:id').delete(validatetoken, deleteSingleOrder );
 
 module.exports = router;

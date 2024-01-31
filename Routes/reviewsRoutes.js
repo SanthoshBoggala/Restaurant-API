@@ -9,11 +9,13 @@ const {
     updateSingleReview,
     deleteSingleReview } = require('../Controllers/reviewControllers');
 
-router.route('/').get( getAllReviews );
-router.route('/user').get( getAllMyReviews );
-router.route('/').post( addSingleReview );
-router.route('/:id').get( getSingleReview );
-router.route('/:id').put( updateSingleReview );
-router.route('/:id').delete( deleteSingleReview );
+const validatetoken = require('../Middlewares/validatetoken');
+
+router.route('/').get(validatetoken, getAllReviews );
+router.route('/user').get(validatetoken, getAllMyReviews );
+router.route('/').post(validatetoken, addSingleReview );
+router.route('/:id').get(validatetoken, getSingleReview );
+router.route('/:id').put(validatetoken, updateSingleReview );
+router.route('/:id').delete(validatetoken, deleteSingleReview );
 
 module.exports = router;

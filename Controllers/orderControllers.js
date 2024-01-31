@@ -5,7 +5,7 @@ const MenuItems = require('../Models/menuItemModel');
 const getAllOrders = asyncHandler (async (req, res) => {
     const { type } = req.user;
     if( type != 'admin' ){
-        res.status(400);
+        res.status(401);
         throw new Error(`authorization failed${type}`);
     }
     const orders = await Orders.find();
@@ -14,7 +14,7 @@ const getAllOrders = asyncHandler (async (req, res) => {
 const getAllMyOrders = asyncHandler (async (req, res) => {
     const { userId, type } = req.user;
     if( type != 'customer' ){
-        res.status(400);
+        res.status(401);
         throw new Error(`authorization failed${type}`);
     }
 
@@ -33,7 +33,7 @@ const addSingleOrder = asyncHandler(async (req, res)=>{
     const { itemKey, count, price } = req.body;
     const { userId, type } = req.user;
     if( type != 'customer' ){
-        res.status(400);
+        res.status(401);
         throw new Error(`authorization failed${type}`);
     }    
     if(!itemKey || !count || !price) {
@@ -51,7 +51,7 @@ const addSingleOrder = asyncHandler(async (req, res)=>{
 const updateSingleOrder = asyncHandler(async (req, res)=>{
     const { type } = req.user;
     if( type != 'admin' ){
-        res.status(400);
+        res.status(401);
         throw new Error(`authorization failed${type}`);
     }
     const updatedOrder = await Orders.findByIdAndUpdate(req.params.id, { status: req.body.status });
@@ -62,6 +62,11 @@ const updateSingleOrder = asyncHandler(async (req, res)=>{
     res.json({updatedOrder});
 });
 const deleteSingleOrder = asyncHandler(async (req, res)=>{
+    const { type } = req.user;
+    if( type != 'admin' ){
+        res.status(401);
+        throw new Error(`authorization failed${type}`);
+    }
     const deletedOrder = await Orders.findByIdAndDelete(req.params.id);
     if(!deletedOrder) {
         res.status(400);
