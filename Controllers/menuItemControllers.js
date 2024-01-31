@@ -7,7 +7,11 @@ const getAllMenu = asyncHandler (async (req, res) => {
     res.json({items});
 });
 const getSingleMenuItem = asyncHandler (async (req, res)=>{
-    const item = await MenuItems.findById(req.params.id);
+    const item = await MenuItems.findOne({ key: req.params.id});
+    if(!item) {
+        res.status(400);
+        throw new Error('item not exists');
+    }
     res.json({item});
 });
 const addSingleMenuItem = asyncHandler(async (req, res)=>{
@@ -17,16 +21,24 @@ const addSingleMenuItem = asyncHandler(async (req, res)=>{
         throw new Error('provide all fields');
     }
 
-    const categoryFound = await Categories.find({type : category});
+    const categoryFound = await Categories.findOne({type : category});
     if(!categoryFound) {
         res.status(400);
         throw new Error('category not found');
     }
+
+    req.body.key = name.split(' ').join('_');
+    const existItem = await MenuItems.findOne({ key: req.body.key });
+    if(existItem) {
+        res.status(400);
+        throw new Error('item already exists');
+    }
+
     const newItem = await MenuItems.create(req.body);
     res.json({newItem});
 });
 const updateSingleMenuItem = asyncHandler(async (req, res)=>{
-    const updatedItem = await MenuItems.findByIdAndUpdate(req,params.id, req.body);
+    const updatedItem = await MenuItems.findOneAndUpdate( { key: req.params.id } , req.body);
     if(!updatedItem) {
         res.status(400);
         throw new Error('item not found');
@@ -34,7 +46,7 @@ const updateSingleMenuItem = asyncHandler(async (req, res)=>{
     res.json({updatedItem});
 });
 const deleteSingleMenuItem = asyncHandler(async (req, res)=>{
-    const deletedItem = await MenuItems.findByIdAndDelete(req,params.id);
+    const deletedItem = await MenuItems.findByIdAndDelete({ key: req.params.id });
     if(!deletedItem) {
         res.status(400);
         throw new Error('item not found');

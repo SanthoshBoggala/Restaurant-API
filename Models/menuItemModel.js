@@ -5,6 +5,16 @@ const menuItemSchema = new mongoose.Schema({
         type: String,
         required : [true, "name should be provided"]
     },
+    key: {
+        type: String,
+        required : [true, "name should be provided"],
+        unique: true
+    },
+    type: {
+        type: String,
+        enum: [ 'non-veg', 'veg', 'none' ],
+        default: 'none'
+    },
     category: {
         type: String,
         required: true

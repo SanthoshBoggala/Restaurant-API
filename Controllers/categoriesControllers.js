@@ -6,7 +6,7 @@ const getAllCategories = asyncHandler (async (req, res) => {
     res.json({categories});
 });
 const getSingleCategory = asyncHandler (async (req, res)=>{
-    const category = await Categories.find({type: req.params.id});
+    const category = await Categories.findOne({type: req.params.id});
     if(!category) {
         res.status(400);
         throw new Error('category not found');
